@@ -54,6 +54,14 @@ public class ObjectSizeTest {
         double d = 0;
     }
 
+    /**
+     * -XX:+UseCompressedOops: mark/8 + Klass/4  + size/4 = 16
+     * -XX:-UseCompressedOops: mark/8 + Klass/8 + size/4 + padding/4= 24
+     */
+    static class X7 {
+        int[] a = {1, 2, 3};
+    }
+
     public ObjectSizeTest(Instrumentation inst) {
         this.inst = inst;
     }
@@ -70,6 +78,7 @@ public class ObjectSizeTest {
         System.out.println("X4:" + inst.getObjectSize(new X4()));
         System.out.println("X5:" + inst.getObjectSize(new X5()));
         System.out.println("X6:" + inst.getObjectSize(new X6()));
+        System.out.println("X7:" + inst.getObjectSize(new X7()));
     }
 
     public static void main(String[] args) {
