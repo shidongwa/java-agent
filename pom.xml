@@ -6,13 +6,16 @@
 
     <groupId>com.stone</groupId>
     <artifactId>java-agent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>java-agent</name>
     <packaging>pom</packaging>
 
     <modules>
         <module>java-agent-object-size</module>
         <module>java-agent-test</module>
+        <module>greys-agent</module>
+        <module>greys-core</module>
     </modules>
+
 
 </project>
