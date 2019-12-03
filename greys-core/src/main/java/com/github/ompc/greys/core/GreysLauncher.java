@@ -1,6 +1,14 @@
 package com.github.ompc.greys.core;
 
+import com.github.ompc.greys.core.util.LogUtil;
+import org.slf4j.Logger;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.github.ompc.greys.core.util.GaStringUtils.getCauseMessage;
 import static java.lang.System.getProperty;
@@ -9,6 +17,7 @@ import static java.lang.System.getProperty;
  * Greys启动器
  */
 public class GreysLauncher {
+    private static final Logger logger = LogUtil.getLogger();
 
     /**
      * greys' core jarfile
@@ -29,7 +38,7 @@ public class GreysLauncher {
         Configure configure = new Configure();
         configure.setGreysAgent("/Users/shidonghua/git-project/java-agent/greys-agent/target/greys-agent.jar");
         configure.setGreysCore("/Users/shidonghua/git-project/java-agent/greys-core/target/greys-core.jar");
-        configure.setJavaPid(26830);
+        configure.setJavaPid(getJavaPid());
 
         // 加载agent
         attachAgent(configure);
@@ -79,5 +88,32 @@ public class GreysLauncher {
             System.err.println("start greys failed, because : " + getCauseMessage(t));
             System.exit(-1);
         }
+    }
+
+    private int getJavaPid() {
+        String line;
+        String pid = "";
+        //Executable file name of the application to check.
+        final String applicationToCheck = "com.stone.Application";
+        try {
+            //Running command that will get all the working processes.
+            Process proc = Runtime.getRuntime().exec("ps -e -opid,command");
+            InputStream stream = proc.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            //Parsing the input stream.
+            while ((line = reader.readLine()) != null) {
+                Pattern pattern = Pattern.compile(applicationToCheck);
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.find()) {
+                    pid = line.split(" ")[0];
+                    logger.info("java pid: {}", pid);
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            // ignore
+        }
+
+        return Integer.valueOf(pid);
     }
 }

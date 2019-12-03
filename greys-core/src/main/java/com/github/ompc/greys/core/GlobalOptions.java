@@ -36,7 +36,7 @@ public class GlobalOptions {
             description =
                     "This option enables the enhanced classes to be dumped to external file for further de-compilation and analysis."
     )
-    public static volatile boolean isDump = false;
+    public static volatile boolean isDump = true;
 
     /**
      * 是否支持批量增强<br/>
