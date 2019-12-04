@@ -2,7 +2,7 @@ package com.github.ompc.greys.core.advice.impl;
 
 import com.github.ompc.greys.core.advice.Advice;
 import com.github.ompc.greys.core.advisor.AdviceListener;
-import com.github.ompc.greys.core.advisor.ReflectAdviceListenerAdapter;
+import com.github.ompc.greys.core.advisor.ReflectAdviceTracingListenerAdapter;
 import com.github.ompc.greys.core.util.InvokeCost;
 import com.github.ompc.greys.core.util.LogUtil;
 import com.github.ompc.greys.core.util.PointCut;
@@ -30,7 +30,7 @@ public class TraceAdvice implements Advice {
 
     @Override
     public AdviceListener getAdviceListener() {
-        return new ReflectAdviceListenerAdapter() {
+        return new ReflectAdviceTracingListenerAdapter() {
             private final InvokeCost invokeCost = new InvokeCost();
 
             @Override

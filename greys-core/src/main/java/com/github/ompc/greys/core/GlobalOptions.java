@@ -109,7 +109,7 @@ public class GlobalOptions {
             summary = "Option to control include sub class when class matching",
             description = "This option disable to include sub class when matching class."
     )
-    public static volatile boolean isDisableSubClass = false;
+    public static volatile boolean isDisableSubClass = true;
 
 //    @Option(
 //            level = 0,

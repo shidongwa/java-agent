@@ -1,6 +1,7 @@
 package com.github.ompc.greys.core.advice;
 
 import com.github.ompc.greys.core.ClassDataSource;
+import com.github.ompc.greys.core.advisor.AdviceWeaver;
 import com.github.ompc.greys.core.advisor.Enhancer;
 import com.github.ompc.greys.core.advice.impl.TraceAdvice;
 import com.github.ompc.greys.core.manager.ReflectManager;
@@ -18,6 +19,7 @@ public class AdviceLauncher {
 
     public static void launch(Instrumentation inst) {
         initForManager(inst);
+        AdviceWeaver.reg(TraceAdvice.ADVICE_ID, enhancerMap.get(TraceAdvice.ADVICE_ID).getAdviceListener());
 
        Set<Map.Entry<Integer, Advice>> set = enhancerMap.entrySet();
        for(Map.Entry<Integer, Advice> entry : set) {
