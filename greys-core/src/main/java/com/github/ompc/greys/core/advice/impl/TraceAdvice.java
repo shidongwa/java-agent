@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 public class TraceAdvice implements Advice {
     private String classPattern = "org.eclipse.jetty.server.Server";
     private String methodPattern = "handle";
+    private String descPattern = "(Lorg/eclipse/jetty/server/HttpChannel;)V";
     private boolean isRegEx = false;
     public static final int ADVICE_ID = 1;
     private static final Logger logger = LogUtil.getLogger();
@@ -23,7 +24,7 @@ public class TraceAdvice implements Advice {
     public PointCut getPointCut() {
         return new PointCut(
                 new ClassMatcher(new PatternMatcher(isRegEx, classPattern)),
-                new GaMethodMatcher(new PatternMatcher(isRegEx, methodPattern)),
+                new GaMethodMatcher(new PatternMatcher(isRegEx, methodPattern), new PatternMatcher(isRegEx, descPattern)),
                 false
                 );
     }

@@ -17,22 +17,38 @@ public class GaMethodMatcher extends ReflectMatcher<GaMethod> {
     // 方法参数匹配(顺序相关)
     private final List<Matcher<Class<?>>> parameters;
 
+    private Matcher<String> descMatcher;
+
     public GaMethodMatcher(
             final int modifier,
             final Matcher<String> name,
+            final Matcher<String> descMatcher,
             final List<Matcher<Class<?>>> parameters,
             final Collection<Matcher<Class<? extends Annotation>>> annotations) {
         super(modifier, name, annotations);
+        this.descMatcher = descMatcher;
         this.parameters = parameters;
     }
 
     public GaMethodMatcher(final Matcher<String> methodNameMatcher) {
-        this(DEFAULT_MOD, methodNameMatcher, null, null);
+        this(DEFAULT_MOD, methodNameMatcher, null, null, null);
+    }
+
+    public GaMethodMatcher(final Matcher<String> methodNameMatcher, final Matcher<String> descMatcher) {
+        this(DEFAULT_MOD, methodNameMatcher, descMatcher, null, null);
     }
 
     @Override
     boolean reflectMatching(GaMethod targetMethod) {
-        return matchingParameters(targetMethod);
+        return matchingDesc(targetMethod);
+    }
+
+    private boolean matchingDesc(final GaMethod targetMethod) {
+        if(descMatcher != null && targetMethod.getDesc() != null) {
+            return descMatcher.matching(targetMethod.getDesc());
+        } else {
+            return true;
+        }
     }
 
     private boolean matchingParameters(final GaMethod targetMethod) {
@@ -58,6 +74,7 @@ public class GaMethodMatcher extends ReflectMatcher<GaMethod> {
                 return false;
             }
         }
+
         return true;
     }
 
