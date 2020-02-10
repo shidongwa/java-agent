@@ -168,6 +168,31 @@ class EventProcessor {
             listener.onEvent(event);
         }
 
+        @Override
+        public String getId() {
+            return "0";
+        }
+
+        @Override
+        public String getClassPattern() {
+            return "";
+        }
+
+        @Override
+        public String getMethodPattern() {
+            return "";
+        }
+
+        @Override
+        public int getParaCnt() {
+            return 0;
+        }
+
+        @Override
+        public Event.Type[] support() {
+            return new Event.Type[0];
+        }
+
     }
 
     final int listenerId;

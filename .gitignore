@@ -4,3 +4,4 @@ out/**
 **/*.iml
 greys-class-dump/**
 lib/**
+sandbox-class-dump/**

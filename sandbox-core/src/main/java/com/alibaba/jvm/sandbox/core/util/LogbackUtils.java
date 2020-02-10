@@ -37,7 +37,7 @@ public class LogbackUtils {
             is = new FileInputStream(configureFile);
             initNamespaceConvert(namespace);
             configurator.doConfigure(is);
-            logger.info(SandboxStringUtils.getLogo());
+//            logger.info(SandboxStringUtils.getLogo());
             logger.info("initializing logback success. file={};", configureFile);
         } catch (Throwable cause) {
             logger.warn("initialize logback failed. file={};", configureFile, cause);

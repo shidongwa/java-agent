@@ -25,7 +25,7 @@ import static com.alibaba.jvm.sandbox.core.util.matcher.structure.ClassStructure
  *
  * @author luanjia@taobao.com
  */
-public class SandboxClassFileTransformer implements ClassFileTransformer {
+public class DemoClassFileTransformer implements ClassFileTransformer {
     private static final String DEFAULT_NAMESPACE = "default";
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -36,13 +36,13 @@ public class SandboxClassFileTransformer implements ClassFileTransformer {
     private final String namespace = DEFAULT_NAMESPACE;
     private final int listenerId;
 
-    public SandboxClassFileTransformer(final Matcher matcher,
-                                EventListener eventListener,
-                                Event.Type[] eventTypeArray) {
+    public DemoClassFileTransformer(final Matcher matcher,
+                                    EventListener eventListener,
+                                    Event.Type[] eventTypeArray) {
         this.matcher = matcher;
         this.eventListener = eventListener;
         this.eventTypeArray = eventTypeArray;
-        this.listenerId = ObjectIDs.instance.identity(eventListener);
+        this.listenerId = Integer.valueOf(eventListener.getId());
     }
 
     // 获取当前类结构

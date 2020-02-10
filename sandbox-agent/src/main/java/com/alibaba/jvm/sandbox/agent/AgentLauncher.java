@@ -110,7 +110,7 @@ public class AgentLauncher {
 
     private static synchronized ClassLoader loadOrDefineClassLoader(final String namespace,
                                                                     final String coreJar) throws Throwable {
-
+        System.out.println("namespace = [" + namespace + "], coreJar = [" + coreJar + "]");
         final SandboxClassLoader classLoader;
 
         // 如果已经被启动则返回之前启动的ClassLoader

@@ -1,15 +1,26 @@
 package com.alibaba.jvm.sandbox.core;
 
+import com.alibaba.jvm.sandbox.core.api.EventListener;
 import com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler;
+import com.alibaba.jvm.sandbox.core.listener.JettyHttpBodyListener;
+import com.alibaba.jvm.sandbox.core.listener.JettyHandlerListener;
+import com.alibaba.jvm.sandbox.core.listener.JettyServerListener;
+import com.alibaba.jvm.sandbox.core.listener.RceListener;
 import com.alibaba.jvm.sandbox.core.manager.impl.InstrumentManager;
+import com.alibaba.jvm.sandbox.core.util.LogbackUtils;
 import com.alibaba.jvm.sandbox.core.util.SpyUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.lang.instrument.Instrumentation;
 
 public class CustomSandbox {
+    private static final String DEFAULT_NAMESPACE = "default";
     private static volatile CustomSandbox sandbox;
     private Instrumentation inst;
     private final CoreConfigure cfg;
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
 
     public CustomSandbox(final CoreConfigure cfg, final Instrumentation inst) {
@@ -18,10 +29,19 @@ public class CustomSandbox {
         this.inst = inst;
 
         SpyUtils.init(cfg.getNamespace());
+
+        LogbackUtils.init(DEFAULT_NAMESPACE,
+                cfg.getJvmSandboxHome() + File.separatorChar + "lib" + File.separator + "sandbox-logback.xml"
+        );
+        logger.info("initializing server. cfg={}", cfg);
     }
 
     public void instrument() {
-        new InstrumentManager(inst).instrument();
+//        initCommonListener();
+        initJettyListener();
+        logger.info("init EventListener success");
+        new InstrumentManager(inst).instrument(inst);
+        logger.info("all classes instrument success");
     }
 
     /**
@@ -41,4 +61,13 @@ public class CustomSandbox {
         return sandbox;
     }
 
+    private void initCommonListener() {
+        EventListener.Factory.register(new RceListener());
+    }
+
+    private void initJettyListener() {
+        EventListener.Factory.register(new JettyServerListener());
+        EventListener.Factory.register(new JettyHandlerListener());
+        EventListener.Factory.register(new JettyHttpBodyListener());
+    }
 }
