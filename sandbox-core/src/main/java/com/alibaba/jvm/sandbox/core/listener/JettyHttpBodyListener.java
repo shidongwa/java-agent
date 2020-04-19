@@ -1,5 +1,6 @@
 package com.alibaba.jvm.sandbox.core.listener;
 
+import com.alibaba.jvm.sandbox.core.api.event.BeforeEvent;
 import com.alibaba.jvm.sandbox.core.api.event.Event;
 
 public class JettyHttpBodyListener extends ListenerAdapter {
@@ -20,5 +21,11 @@ public class JettyHttpBodyListener extends ListenerAdapter {
     @Override
     public void onEvent(Event event) throws Throwable {
         System.out.println("jetty http body event occurs:" + event.type);
+        if(event.type == Event.Type.BEFORE) {
+            BeforeEvent beforeEvent = (BeforeEvent)event;
+
+            System.out.println("processId:" + beforeEvent.processId + ", invokeId:" + beforeEvent.invokeId
+                    + ", body:" + new String((byte[])beforeEvent.argumentArray[0]));
+        }
     }
 }

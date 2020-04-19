@@ -26,12 +26,12 @@ public class InstrumentManager {
         this.classDataSource = new DefaultCoreLoadedClassDataSource(inst, true);
     }
 
-    public void instrument(Instrumentation instrumentation) {
+    public void instrument() {
 
         Set<String> adviceIds = EventListener.Factory.getAdviceIds();
         if(adviceIds != null) {
             for(String adviceId : adviceIds) {
-                enhance(adviceId, instrumentation);
+                enhance(adviceId, inst);
             }
 
             active();

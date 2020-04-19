@@ -40,7 +40,7 @@ public class CustomSandbox {
 //        initCommonListener();
         initJettyListener();
         logger.info("init EventListener success");
-        new InstrumentManager(inst).instrument(inst);
+        new InstrumentManager(inst).instrument();
         logger.info("all classes instrument success");
     }
 
@@ -67,7 +67,7 @@ public class CustomSandbox {
 
     private void initJettyListener() {
         EventListener.Factory.register(new JettyServerListener());
-        EventListener.Factory.register(new JettyHandlerListener());
+//        EventListener.Factory.register(new JettyHandlerListener());
         EventListener.Factory.register(new JettyHttpBodyListener());
     }
 }
