@@ -1,14 +1,13 @@
 package com.stone.controller;
 
 import com.stone.domain.User;
+import com.stone.service.DemoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +17,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 
 @RestController
 public class HelloController {
+    @Autowired
+    private DemoService demoService;
 
     @RequestMapping("/")
     public String index() {
@@ -41,5 +42,12 @@ public class HelloController {
     User newEmployee(@RequestBody User user) {
 
         return user;
+    }
+
+    @GetMapping(value = "/hello/{name}")
+    public String sayHello(@PathVariable("name") String name) {
+        String hello = demoService.sayHello(name);
+
+        return hello;
     }
 }

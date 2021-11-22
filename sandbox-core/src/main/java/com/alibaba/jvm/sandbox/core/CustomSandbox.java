@@ -2,10 +2,7 @@ package com.alibaba.jvm.sandbox.core;
 
 import com.alibaba.jvm.sandbox.core.api.EventListener;
 import com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler;
-import com.alibaba.jvm.sandbox.core.listener.JettyHttpBodyListener;
-import com.alibaba.jvm.sandbox.core.listener.JettyHandlerListener;
-import com.alibaba.jvm.sandbox.core.listener.JettyServerListener;
-import com.alibaba.jvm.sandbox.core.listener.RceListener;
+import com.alibaba.jvm.sandbox.core.listener.*;
 import com.alibaba.jvm.sandbox.core.manager.impl.InstrumentManager;
 import com.alibaba.jvm.sandbox.core.util.LogbackUtils;
 import com.alibaba.jvm.sandbox.core.util.SpyUtils;
@@ -38,7 +35,8 @@ public class CustomSandbox {
 
     public void instrument() {
 //        initCommonListener();
-        initJettyListener();
+//        initJettyListener();
+        initTestListener();
         logger.info("init EventListener success");
         new InstrumentManager(inst).instrument();
         logger.info("all classes instrument success");
@@ -69,5 +67,9 @@ public class CustomSandbox {
         EventListener.Factory.register(new JettyServerListener());
 //        EventListener.Factory.register(new JettyHandlerListener());
         EventListener.Factory.register(new JettyHttpBodyListener());
+    }
+
+    private void initTestListener() {
+        EventListener.Factory.register(new DemoListener());
     }
 }

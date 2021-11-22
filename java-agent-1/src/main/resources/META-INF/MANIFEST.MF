@@ -1,0 +1,4 @@
+Premain-Class: com.stone.agent.Agent1
+Agent-Class: com.stone.agent.Agent1
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
