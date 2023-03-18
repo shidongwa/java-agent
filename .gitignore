@@ -4,3 +4,5 @@ out/**
 **/*.iml
 greys-class-dump/**
 lib/**
+**/*.ipr
+**/*.iws

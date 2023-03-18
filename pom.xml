@@ -18,6 +18,7 @@
         <module>sandbox-agent</module>
         <module>sandbox-spy</module>
         <module>sandbox-core</module>
+        <module>java-agent-injector</module>
     </modules>
 
     <build>
