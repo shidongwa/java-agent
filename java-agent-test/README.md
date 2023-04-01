@@ -19,3 +19,26 @@
         </plugins>
     </build>
 ```
+
+### start with premain java agent
+```
+-javaagent:/Users/dong/git-project/java-agent/java-agent-object-size/target/java-agent-object-size-1.0-SNAPSHOT.jar
+```
+
+e.g. attach object size premain agent
+```shell
+java -javaagent:/Users/dong/git-project/java-agent/java-agent-object-size/target/java-agent-object-size-1.0-SNAPSHOT.jar -jar java-agent-test/target/java-agent-test-1.0.0-SNAPSHOT.jar
+```
+
+attach greys-agent
+```shell
+java -javaagent:/Users/dong/git-project/java-agent/greys-agent/target/greys-agent.jar="/Users/dong/git-project/java-agent/greys-core/target/greys-core.jar;" -jar java-agent-test/target/java-agent-test-1.0.0-SNAPSHOT.jar
+```
+
+attach with gc log, stw log
+```shell
+java -javaagent:/Users/dong/git-project/java-agent/greys-agent/target/greys-agent.jar="/Users/dong/git-project/java-agent/greys-core/target/greys-core.jar;" -XX:+PrintGCTimeStamps -XX:+PrintGCDetails -XX:+PrintGCApplicationStoppedTime -jar java-agent-test/target/java-agent-test-1.0.0-SNAPSHOT.jar
+```
+
+
+
